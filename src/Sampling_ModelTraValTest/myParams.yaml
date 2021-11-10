@@ -1,0 +1,56 @@
+CKPTS:
+  task: 'PIK3CA_mutation'
+  configs: 'PIK3CA_mutation_resnet_setting.txt'
+  resultpath: '..\\norm_results_new\\'
+  taskID: 'fold1_alltumor_patch500_batch256_lr0.001_CE_ADAM_resnet18_nofroz_noadj'
+
+# variables
+Models:
+  net: resnet18 # #  alexnet, inception_v3,resnet18, shufflenet_v2_x0_5
+  pretrained: 'F:\\TNBC_DL\\DATA\\PRETRAINED_MODELS\\resnet18-5c106cde.pth'
+  #'F:\\TNBC_DL\\DATA\\PRETRAINED_MODELS\\alexnet-owt-4df8aa71.pth'
+  #'F:\\TNBC_DL\\DATA\\PRETRAINED_MODELS\\resnet18-5c106cde.pth'
+  #'F:\\TNBC_DL\\DATA\\PRETRAINED_MODELS\\inception_v3_google-1a9a5a14.pth'
+  #'F:\\TNBC_DL\\DATA\\PRETRAINED_MODELS\\shufflenetv2_x0.5-f707e7126e.pth'
+  #'F:\\TNBC_DL\\DATA\\PRETRAINED_MODELS\\inception_v3_google-1a9a5a14.pth'
+
+DATA:
+  trainpath: 'F:\\TNBC_DL\\DATA\\NET_DATA\\TRY_TEMP_NORM_NEW\\TrValTe_PATCH_LABEL\\PIK3CA_mutation\\fold1_alltumor_patch500_TRAIN.txt'
+  validpath: 'F:\\TNBC_DL\\DATA\\NET_DATA\\TRY_TEMP_NORM_NEW\\TrValTe_PATCH_LABEL\\PIK3CA_mutation\\fold1_alltumor_patch500_VAL.txt'
+  traval_root: 'F:\\TNBC_DL\\DATA\\IMAGE_DATA\\FUSCC_TNBC_IMAGES\\FUSCC_NORM_PATCH\\'
+  test_root: 'F:\\TNBC_DL\\DATA\\IMAGE_DATA\\TCGA_TNBC_IMAGES\\TCGA_NORM_PATCH\\'
+  nCls: 2
+  norm: {'normMean': [0.8201, 0.5207, 0.7189] , 'normStd': [0.1526, 0.1542, 0.1183]}
+
+FROZ:
+  froz_layer: 60
+  # shuffle 168 alenet 10 inception282 resnet18 60
+
+# fixed variables
+
+CommonSettings:
+  epoches: 50
+  batch_size: 256  # can adjust to 256, 512, 1024, 2048
+  # iteration * batch_size = samples nums 104543//256 = max(iteration)
+
+  gpu: '1,0'
+  seed: 2020
+  nWorker: 4  # data loader workers
+
+Optims:
+  initLR: 0.001
+  loss:  CrossEntropyLoss #FocalLoss
+  weights: #[1,1]
+
+  optimizer: 'ADAM'
+
+  power: 0.9
+  decay: 0.0001
+  momentum: 0.9
+
+  b: 0
+
+
+TESTING:
+  testpath: 'F:\\TNBC_DL\\DATA\\NET_DATA\\TRY_TEMP_NORM_NEW\\TrValTe_PATCH_LABEL\\PIK3CA_mutation\\fold1_alltumor_patch500_TEST.txt'
+  restore:
