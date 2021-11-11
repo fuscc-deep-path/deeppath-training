@@ -1,6 +1,6 @@
-# Deeppath Training
+# Model development and evaluation
 
-Pipeline for convolutional neural network (CNN) models to infer molecular features from pathological whole slide images (WSIs) by Fudan University Shanghai Cancer Center.
+Pipeline for training and validating convolutional neural network (CNN) models to infer molecular features from pathological whole slide images (WSIs).
 
 ## Steps
 The entire workflow comprises three steps:
